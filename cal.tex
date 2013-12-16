@@ -5,9 +5,7 @@
 \usepackage[cm]{fullpage}
 
 \usepackage{tikz}
-\usetikzlibrary{calendar,fit}
-\usepackage{pgfcalendar}
-\usepackage[italian]{translator}
+\usetikzlibrary{calendar}
 
 \newlength{\cellheight}
 \setlength{\cellheight}{30mm}
@@ -18,14 +16,34 @@
 \pgfkeys{/tikz/day code =
   {
     \node (0,0) [above left,font=\Huge] {\tikzdaytext};
-    \node at (-\cellwidth+\cellsep,\cellheight-\cellsep) [below
-    right,align=left, font=\tiny,black]
-    {mona \\};
-    \draw[rounded corners] (0,0) rectangle (-\cellwidth+\cellsep,\cellheight-\cellsep);
+    \draw[rounded corners, black!50, very thick] (0,0) rectangle (-\cellwidth+\cellsep,\cellheight-\cellsep);
   }
 }
 
+\newcommand\addbithday[1]
+{
+    \node at (-\cellwidth+\cellsep,\cellheight-\cellsep) [below
+    right,align=left, font=\tiny,black] {\color{purple} #1};
+}
+\newcommand\birthday
+{
+  % add here your birthdays...
+      if (equals=01-03) {\addbithday{Mona}}
+      if (equals=12-15) {\addbithday{Monica}}
+}
+
+
+\def\pgfcalendarmonthname#1{%
+  \translate{\ifcase#1\or Gennaio
+    \or Febbraio \or Marzo\or Aprile\or
+    Maggio \or Giugno \or Luglio \or Augusto \or Settembre \or Ottobre\or
+    Novembre \or Dicembre\fi}%
+}
 \begin{document}
+\pagestyle{empty}
+\ 
+
+\vfill
 
 \begin{tikzpicture}
   \tikzstyle{daynode}=[
@@ -49,6 +67,8 @@
           equals=12-25,
           equals=12-26
          ) [red]
+      %if (equals=01-03) {\addbithday{Mona}}
+      \birthday
       ;
 \end{tikzpicture}
 \end{document}
