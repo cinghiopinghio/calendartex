@@ -1,21 +1,22 @@
 \documentclass[12pt]{article}
 
 %\usepackage[italian]{babel}
-\usepackage[a3paper,pdftex]{geometry}
-\usepackage[cm]{fullpage}
+\usepackage[margin=1cm,a4paper,landscape,pdftex]{geometry}
 
+
+\usepackage{relsize}
 \usepackage{tikz}
 \usetikzlibrary{calendar}
 
 \newlength{\cellheight}
-\setlength{\cellheight}{30mm}
+\setlength{\cellheight}{27mm}
 \newlength{\cellwidth}
 \setlength{\cellwidth}{0.14\textwidth}
 \newlength{\cellsep}
-\setlength{\cellsep}{2mm}
+\setlength{\cellsep}{1mm}
 \pgfkeys{/tikz/day code =
   {
-    \node (0,0) [above left,font=\Huge] {\tikzdaytext};
+    \node (0,0) [above left, font=\Huge] {\tikzdaytext};
     \draw[rounded corners, black!50, very thick] (0,0) rectangle (-\cellwidth+\cellsep,\cellheight-\cellsep);
   }
 }
@@ -23,15 +24,59 @@
 \newcommand\addbithday[1]
 {
     \node at (-\cellwidth+\cellsep,\cellheight-\cellsep) [below
-    right,align=left, font=\tiny,black] {\color{purple} #1};
+    right,align=left, font=\tiny,black] {#1};
 }
 \newcommand\birthday
 {
   % add here your birthdays...
-      if (equals=01-03) {\addbithday{Mona}}
+      if (equals=01-08) {\addbithday{Anita di Silvia}}
+      if (equals=01-11) {\addbithday{Valentine\\Silvia Garbari}}
+      if (equals=01-26) {\addbithday{Loreno}}
+      if (equals=01-30) {\addbithday{Gigliola}}
+      if (equals=02-03) {\addbithday{Maya}}
+      if (equals=02-21) {\addbithday{Ann. De Marco+Brotto}}
+      if (equals=02-23) {\addbithday{Marti}}
+      if (equals=02-24) {\addbithday{Silvia Dominici}}
+      if (equals=03-02) {\addbithday{Raquel de la Riva}}
+      if (equals=03-19) {\addbithday{Festa del pap\`a}}
+      if (equals=03-21) {\addbithday{Mauro}}
+      if (equals=03-23) {\addbithday{Martino}}
+      if (equals=03-27) {\addbithday{Mattia}}
+      if (equals=04-02) {\addbithday{Maurizio}}
+      if (equals=04-04) {\addbithday{Charlie}}
+      if (equals=04-22) {\addbithday{Aitor}}
+      if (equals=04-27) {\addbithday{Aurora}}
+      if (equals=05-18) {\addbithday{Alberto}}
+      if (equals=05-28) {\addbithday{Ann. Faccin+Cenzon}}
+      if (equals=06-09) {\addbithday{Chuse}}
+      if (equals=06-13) {\addbithday{Delia}}
+      if (equals=07-03) {\addbithday{Simone}}
+      if (equals=07-04) {\addbithday{Sergio}}
+      if (equals=07-07) {\addbithday{bisnonna Maria}}
+      if (equals=07-09) {\addbithday{Eleonora\\Elisabeth}}
+      if (equals=07-30) {\addbithday{Giulia}}
+      if (equals=08-01) {\addbithday{Elena Lizzi}}
+      if (equals=08-19) {\addbithday{PI}}
+      if (equals=09-03) {\addbithday{Fabrizia}}
+      if (equals=09-08) {\addbithday{Juan Burgos}}
+      if (equals=09-17) {\addbithday{Chiara}}
+      if (equals=09-19) {\addbithday{Mignana}}
+      if (equals=09-20) {\addbithday{Emanuele Cozzo}}
+      if (equals=09-21) {\addbithday{Manila}}
+      if (equals=09-22) {\addbithday{Mariano}}
+      if (equals=09-27) {\addbithday{Tiago\\Daniela\\Titta}}
+      if (equals=10-02) {\addbithday{Tommaso\\Festa de** Nonn*}}
+      if (equals=10-04) {\addbithday{Nico}}
+      if (equals=10-07) {\addbithday{Damiano}}
+      if (equals=10-31) {\addbithday{Luca}}
+      if (equals=11-06) {\addbithday{Bruno}}
+      if (equals=11-08) {\addbithday{Venusia}}
+      if (equals=11-11) {\addbithday{Mats}}
+      if (equals=11-25) {\addbithday{Lorenzo (V)}}
+      if (equals=12-05) {\addbithday{Silvia Anarquia}}
       if (equals=12-15) {\addbithday{Monica}}
+      if (equals=12-21) {\addbithday{bisnonno Bruno}}
 }
-
 
 \def\pgfcalendarmonthname#1{%
   \translate{\ifcase#1\or Gennaio
@@ -39,36 +84,81 @@
     Maggio \or Giugno \or Luglio \or Augusto \or Settembre \or Ottobre\or
     Novembre \or Dicembre\fi}%
 }
-\begin{document}
-\pagestyle{empty}
-\ 
 
-\vfill
+\makeatletter%
+\tikzoption{day headings}{\tikzstyle{day heading}=[#1]}
+\tikzstyle{day heading}=[]
+\tikzstyle{day letter headings}=[
+    execute before day scope={ \ifdate{day of month=1}{%
+      \pgfmathsetlength\pgf@ya{\tikz@lib@cal@yshift}%
+      \pgfmathsetlength\pgf@xa{\tikz@lib@cal@xshift}%
+      %\pgftransformxshift{-\pgf@xa}
+      %\pgftransformyshift{-\pgf@ya}
+      \foreach \d/\l in {0/Lun,1/Mar,2/Mer,3/Gio,4/Ven,5/Sab,6/Dom} {
+        \pgf@xa=\d\pgf@xa%
+        \pgftransformxshift{\pgf@xa}%
+        \pgftransformyshift{\pgf@ya}%
+        \node [every day,day heading]{\textsc{\l}};%
+      } 
+    }{}%
+  }%
+]
 
+\makeatother%
+
+
+\newcommand\addmonth[1]{
 \begin{tikzpicture}
   \tikzstyle{daynode}=[
-       minimum height=2.5cm,
-       align=left,
        name=\pgfcalendarsuggestedname,
        every day]
   \calendar[
-      dates=2014-01-01 to 2014-01-31,
+      dates=2014-#1-01 to 2014-#1-last,
       week list,
+       day headings=black!50,
+       day letter headings,
       month label above centered,
       month text=\textsc{\Large\%mt \%y0},
       day xshift=\cellwidth,
       day yshift=\cellheight,
- %     day code=\daycode
       ]
+      %if (day of month=1) {\writeweekdays}
       if (Sunday,
           equals=01-01,
           equals=01-06,
-          equals=05-17,
+          equals=05-01,
           equals=12-25,
           equals=12-26
-         ) [red]
-      %if (equals=01-03) {\addbithday{Mona}}
+         ) [black!50]
       \birthday
       ;
 \end{tikzpicture}
+}
+\begin{document}
+\pagestyle{empty}
+
+\addmonth{01}
+\newpage
+%\addmonth{02}
+%\newpage
+%\addmonth{03}
+%\newpage
+%\addmonth{04}
+%\newpage
+%\addmonth{05}
+%\newpage
+%\addmonth{06}
+%\newpage
+%\addmonth{07}
+%\newpage
+%\addmonth{08}
+%\newpage
+%\addmonth{09}
+%\newpage
+%\addmonth{10}
+%\newpage
+%\addmonth{11}
+%\newpage
+%\addmonth{12}
+%\newpage
 \end{document}
