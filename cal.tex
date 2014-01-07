@@ -21,6 +21,29 @@
   }
 }
 
+\newcommand\addholiday[1]
+{
+    \node at (-\cellwidth+\cellsep,0) [above right, draw,
+          rounded corners,
+          align=left, font=\footnotesize, black!50] {#1};
+}
+\newcommand\holidays
+{
+  % add here your Holidays...
+      if (equals=01-01) {\addholiday{Capodanno}}
+      if (equals=01-06) {\addholiday{Epifania}}
+      if (equals=04-20) {\addholiday{Pasqua}}
+      if (equals=04-21) {\addholiday{Pasquetta}}
+      if (equals=04-25) {\addholiday{Liberazione}}
+      if (equals=05-01) {\addholiday{1 Maggio}}
+      if (equals=06-02) {\addholiday{Repubblica}}
+      if (equals=08-15) {\addholiday{Ferragosto}}
+      if (equals=11-01) {\addholiday{Ognissanti}}
+      if (equals=12-08) {\addholiday{Concezione}}
+      if (equals=12-25) {\addholiday{Natale}}
+      if (equals=12-26) {\addholiday{Stefano}}
+}
+
 \newcommand\addbithday[1]
 {
     \node at (-\cellwidth+\cellsep,\cellheight-\cellsep) [below
@@ -108,6 +131,8 @@
 
 
 \newcommand\addmonth[1]{
+
+  \  \vfill
 \begin{tikzpicture}
   \tikzstyle{daynode}=[
        name=\pgfcalendarsuggestedname,
@@ -122,43 +147,27 @@
       day xshift=\cellwidth,
       day yshift=\cellheight,
       ]
-      %if (day of month=1) {\writeweekdays}
-      if (Sunday,
-          equals=01-01,
-          equals=01-06,
-          equals=05-01,
-          equals=12-25,
-          equals=12-26
-         ) [black!50]
+      if (Sunday) [black!50]
+      \holidays
       \birthday
       ;
 \end{tikzpicture}
+\ \vfill
+\newpage
 }
 \begin{document}
 \pagestyle{empty}
 
 \addmonth{01}
-\newpage
-%\addmonth{02}
-%\newpage
-%\addmonth{03}
-%\newpage
-%\addmonth{04}
-%\newpage
-%\addmonth{05}
-%\newpage
-%\addmonth{06}
-%\newpage
-%\addmonth{07}
-%\newpage
-%\addmonth{08}
-%\newpage
-%\addmonth{09}
-%\newpage
-%\addmonth{10}
-%\newpage
-%\addmonth{11}
-%\newpage
-%\addmonth{12}
-%\newpage
+\addmonth{02}
+\addmonth{03}
+\addmonth{04}
+\addmonth{05}
+\addmonth{06}
+\addmonth{07}
+\addmonth{08}
+\addmonth{09}
+\addmonth{10}
+\addmonth{11}
+\addmonth{12}
 \end{document}
